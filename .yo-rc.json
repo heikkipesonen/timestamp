@@ -1,0 +1,7 @@
+{
+  "generator-react-webpack": {
+    "appName": "timestamp",
+    "style": "scss",
+    "postcss": false
+  }
+}

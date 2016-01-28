@@ -1,0 +1,17 @@
+.view-section{
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+
+  .view-section-title{
+    height: 42px;
+    background-color: #eee;
+  }
+
+  .view-section-content{
+    background-color: #aaa;
+    flex: 1;
+  }
+}

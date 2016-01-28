@@ -1,0 +1,53 @@
+.month{
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+
+  h2{
+    font-weight: 200;
+    color: #aaa;
+    margin: 0;
+    padding-bottom: 16px;
+  }
+}
+
+.week{
+  display: flex;
+  flex-direction: row;
+  &:not(:last-child){
+    border-bottom: 1px solid #eee;
+  }
+}
+
+.day{
+  flex: 1;
+  display: flex;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  span{
+    width: 42px;
+    height: 42px;
+    line-height: 42px;
+  }
+
+  &.selected span{
+    border-radius: 50%;
+    background-color: #646ffe;
+  }
+}
+
+
+.weekdays{
+  display: flex;
+  flex-direction: row;
+
+  .day{
+    font-size: 0.8em;
+    color: #aaa;
+
+
+  }
+}
