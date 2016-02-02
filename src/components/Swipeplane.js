@@ -14,6 +14,8 @@ class SwipePlane extends React.Component {
       height: 0,
       xratio: 0,
       yratio: 0,
+      dxratio: 0,
+      dyratio: 0,
       direction: false
     };
 
@@ -25,10 +27,20 @@ class SwipePlane extends React.Component {
   }
 
   componentDidMount() {
+    this.refs.swipePlane.addEventListener('touchstart', this.touchStart);
+    this.refs.swipePlane.addEventListener('touchmove', this.touchMove);
+    this.refs.swipePlane.addEventListener('touchend', this.touchEnd);
+
     this.setState({
       width: this.refs.swipePlane.offsetWidth,
       height: this.refs.swipePlane.offsetHeight
     });
+  }
+
+  componentWillUnmount() {
+    this.refs.swipePlane.removeEventListener('touchstart', this.touchStart);
+    this.refs.swipePlane.removeEventListener('touchmove', this.touchMove);
+    this.refs.swipePlane.removeEventListener('touchend', this.touchEnd);
   }
 
   touchStart = (evt) => {
@@ -66,16 +78,24 @@ class SwipePlane extends React.Component {
       dx = 0;
     }
 
-    this.setState({
+    let newState = {
       direction: direction,
+      step_x: dx,
+      step_y: dy,
       x: this.state.x += dx,
       y: this.state.y += dy,
-      xratio:  (this.state.x + dx) / this.state.width,
-      yratio:  (this.state.y + dy) / this.state.height
-    });
+      dx: dx,
+      dy: dy
+    };
+
+    this.setState(newState);
 
     if (this.props.onSwipe){
       this.props.onSwipe(this.state);
+    }
+
+    if (this.onSwipeMove){
+      this.onSwipeMove(newState);
     }
 
     this.lastEvent.direction = direction;
@@ -92,6 +112,8 @@ class SwipePlane extends React.Component {
     }
 
     this.setState({
+      step_x: 0,
+      step_y: 0,
       x: 0,
       y: 0
     });
@@ -101,10 +123,7 @@ class SwipePlane extends React.Component {
     return (
       <div
         ref="swipePlane"
-        className="swipe-plane"
-        onTouchStart={this.touchStart}
-        onTouchMove={this.touchMove}
-        onTouchEnd={this.touchEnd}>
+        className="swipe-plane">
       </div>
     );
   }

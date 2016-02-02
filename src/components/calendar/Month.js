@@ -62,8 +62,8 @@ class Month extends React.Component {
   }
 
   onDaySelect = (day) => {
-    if (day !== false && this.props.onDaySelect) {
-      this.props.onDaySelect(day);
+    if (day !== false && this.props.onChange) {
+      this.props.onChange(day);
     }
   };
 
