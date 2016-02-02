@@ -1,12 +1,11 @@
-require('./view.scss');
-
 import React from 'react';
 
 
 class View extends React.Component {
   render() {
+    let classNames = (this.props.className || '') + ' view';
     return (
-      <div className="view">{this.props.children}</div>
+      <div className={classNames}>{this.props.children}</div>
     );
   }
 }

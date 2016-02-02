@@ -1,4 +1,29 @@
-class Time {
+export const MONTH_NAMES = [
+  'tammikuu',
+  'helmikuu',
+  'maaliskuu',
+  'huhtikuu',
+  'toukokuu',
+  'kesäkuu',
+  'heinäkuu',
+  'elokuu',
+  'syyskuu',
+  'lokakuu',
+  'marraskuu',
+  'joulukuu'
+];
+
+export const DAY_NAMES = [
+  'ma',
+  'ti',
+  'ke',
+  'to',
+  'pe',
+  'la',
+  'su'
+];
+
+export class Time {
   static getMonthDays(model) {
     let trackModel = new Date(model.getTime());
     trackModel.setDate(1);
@@ -44,5 +69,3 @@ class Time {
     return calendar;
   }
 }
-
-export default Time;

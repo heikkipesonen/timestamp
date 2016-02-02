@@ -2,32 +2,7 @@ require('./calendar.scss');
 
 import React from 'react';
 import Week from './Week';
-import Time from '../Time';
-
-const MONTH_NAMES = [
-  'tammikuu',
-  'helmikuu',
-  'maaliskuu',
-  'huhtikuu',
-  'toukokuu',
-  'kesäkuu',
-  'heinäkuu',
-  'elokuu',
-  'syyskuu',
-  'lokakuu',
-  'marraskuu',
-  'joulukuu'
-];
-
-const DAY_NAMES = [
-  'ma',
-  'ti',
-  'ke',
-  'to',
-  'pe',
-  'la',
-  'su'
-];
+import {MONTH_NAMES, DAY_NAMES, Time} from '../Time';
 
 class Month extends React.Component {
   constructor(props){

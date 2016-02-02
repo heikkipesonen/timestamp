@@ -51,9 +51,14 @@ class SwipePlane extends React.Component {
     this.lastEvent.y = evt.touches[0].pageY;
     this.lastEvent.direction = false;
 
-    if (this.props.onSwipeStart){
-      this.props.onSwipeStart(this.state);
-    }
+    this.setState({
+      step_x: 0,
+      step_y: 0,
+      dx: 0,
+      dy: 0,
+      x: 0,
+      y: 0
+    });
   };
 
   touchMove = (evt) => {
@@ -90,10 +95,6 @@ class SwipePlane extends React.Component {
 
     this.setState(newState);
 
-    if (this.props.onSwipe){
-      this.props.onSwipe(this.state);
-    }
-
     if (this.onSwipeMove){
       this.onSwipeMove(newState);
     }
@@ -107,16 +108,18 @@ class SwipePlane extends React.Component {
     evt.stopPropagation();
     evt.preventDefault();
 
-    if (this.props.onSwipeEnd){
-      this.props.onSwipeEnd(this.state);
-    }
-
     this.setState({
       step_x: 0,
       step_y: 0,
+      dx: 0,
+      dy: 0,
       x: 0,
       y: 0
     });
+
+    if (this.onSwipeEnd){
+      this.onSwipeEnd(this.state);
+    }
   };
 
   render() {
