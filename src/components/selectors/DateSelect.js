@@ -1,33 +1,18 @@
-require('./date-select.scss');
+import BaseSelector from './BaseSelector';
+import {Time} from '../Time';
 
-import SwipePlane from '../SwipePlane';
-import React from 'react';
-
-class DateSelect extends SwipePlane{
+class DateSelect extends BaseSelector{
   constructor(props) {
     super(props);
 
-    this.state.model = this.props.model || new Date();
-    this.state.displayDate = this.getDisplayDate();
-
-    this.options = {
+    this.setOptions({
       axis_days: 'x',
       axis_months: 'y',
       threshold_months: 40,
       threshold_days: 40
-    };
-    this.offset = {
-      x: 0,
-      y: 0
-    };
-  }
+    });
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.model) {
-      this.setState({
-        model: nextProps.model
-      });
-    }
+    this.state.model = this.props.model || new Date();
   }
 
   onSwipeMove(state) {
@@ -69,36 +54,14 @@ class DateSelect extends SwipePlane{
   }
 
   /**
-   * update only when display string changes
-   * @param  {[type]} nextProps [description]
-   * @param  {[type]} nextState [description]
-   * @return {[type]}           [description]
-   */
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextState.model.getTime() !== this.state.model.getTime();
-  }
-
-  /**
    * parse date to string
    * @return {[type]} [description]
    */
-  getDisplayDate(model) {
+  getDisplayString(model) {
     if (!model) {
       model = this.state.model;
     }
-
-    let day = '0' + model.getDate();
-    let month = '0' + (model.getMonth() +1);
-    return day.slice(-2) + '.' + month.slice(-2) + '.' + model.getFullYear();
-  }
-
-  render() {
-    return (
-      <div className="time-picker date-select" ref="swipePlane">
-        <label className="time-picker-label">{this.props.label || ''}</label>
-        <h1>{this.getDisplayDate()}</h1>
-      </div>
-    );
+    return Time.formatDate(model);
   }
 }
 

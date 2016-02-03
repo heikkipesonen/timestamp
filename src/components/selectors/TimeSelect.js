@@ -1,37 +1,28 @@
-require('./date-select.scss');
+import BaseSelector from './BaseSelector';
+import {Time} from '../Time';
 
-import SwipePlane from '../SwipePlane';
-import React from 'react';
-
-
-class TimeSelect extends SwipePlane{
+class TimeSelect extends BaseSelector{
   constructor(props) {
     super(props);
-
     this.state.model = 0;
-    this.state.m = 0;
-    this.state.h = 0;
 
-    this.state.displayTime = this.getDisplayTime();
-    this.options = {
+    this.setOptions({
+      min: 0,
+      max: 7.5 * 60,
       axis_minutes: 'x',
       axis_hours: 'y',
-      threshold_minutes: 40,
       threshold_hours: 40,
-      min: 0,
-      max: 7.5 * 60
-    };
+      threshold_minutes: 40
+    });
+  }
 
-    this.offset = {
-      x: 0,
-      y: 0
-    };
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.state.model !== nextState.model;
   }
 
   onSwipeMove(state) {
     this.offset.x += state.step_x ? state.step_x : 0;
     this.offset.y += state.step_y ? state.step_y : 0;
-
 
     let offsetHours = 0,
         offsetMinutes = 0;
@@ -44,7 +35,6 @@ class TimeSelect extends SwipePlane{
     }
 
     if (Math.abs(offsetMinutes) > 0 || Math.abs(offsetHours) > 0){
-
       this.offset.y = 0;
       this.offset.x = 0;
       let newModelTime = this.state.model + offsetHours*60 + offsetMinutes * 15;
@@ -63,33 +53,11 @@ class TimeSelect extends SwipePlane{
   }
 
   /**
-   * update only when display string changes
-   * @param  {[type]} nextProps [description]
-   * @param  {[type]} nextState [description]
-   * @return {[type]}           [description]
-   */
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextState.model !== this.state.model;
-  }
-
-  /**
    * parse date to string
    * @return {[type]} [description]
    */
-  getDisplayTime() {
-    let hours = ('0'+ Math.floor(this.state.model / 60)).slice(-2);
-    let minutes = ('0' + (this.state.model % 60)).slice(-2);
-
-    return `${hours}:${minutes}`;
-  }
-
-  render() {
-    return (
-      <div className="time-picker time-select" ref="swipePlane">
-        <label className="time-picker-label">{this.props.label || ''}</label>
-        <h1>{this.getDisplayTime()}</h1>
-      </div>
-    );
+  getDisplayString() {
+    return Time.formatMinutes(this.state.model);
   }
 }
 

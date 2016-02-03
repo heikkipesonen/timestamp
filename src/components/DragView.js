@@ -68,10 +68,6 @@ class DragView extends DragElement{
         <div
           ref="dragElement"
           style={this.getElementStyle()}
-          onTransitionEnd={this.animationEnd}
-          onTouchStart={this.dragStart}
-          onTouchMove={this.dragMove}
-          onTouchEnd={this.dragEnd}
           className={this.getClassNames()}>
           {this.props.children}
         </div>

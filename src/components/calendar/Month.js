@@ -9,38 +9,44 @@ class Month extends React.Component {
     super(props);
 
     this.state = {
-      calendar: []
+      monthName: '',
+      model: new Date(),
+      calendar: [],
     };
   }
 
   componentDidMount() {
-    this.setMonth(this.props.model);
+    let model = new Date(this.props.model ? this.props.model.getTime() : Date.now());
+    this.setMonth(model);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setMonth(nextProps.model);
-
-    this.setState({
-      selectedDate: nextProps.selectedDate || null
-    });
+    let model = new Date(nextProps.model.getTime());
+    this.setMonth(model);
   }
 
   setMonth(model) {
-    if (model === false || model === undefined) return;
-
-    let calendar = Time.getCalendar(model);
+    if (!model) {
+      model = this.state.model;
+    }
 
     this.setState({
+      model: model,
       monthName: MONTH_NAMES[model.getMonth()],
-      calendar: calendar
+      calendar: Time.getCalendar(model),
     });
   }
 
   onDaySelect = (day) => {
+    console.log(day);
     if (day !== false && this.props.onChange) {
       this.props.onChange(day);
     }
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.model !== this.state.model;
+  }
 
   render() {
     return (
@@ -55,7 +61,7 @@ class Month extends React.Component {
         </div>
         <div className="month-wrapper">
           {this.state.calendar.map((week, weekIndex) => {
-            return (<Week model={week} selectedDate={this.props.model.getDate()} key={weekIndex} onClick={this.onDaySelect}></Week>);
+            return (<Week model={week} selectedDate={this.state.model.getDate()} key={weekIndex} onClick={this.onDaySelect}></Week>);
           })}
         </div>
       </div>

@@ -16,7 +16,8 @@ class SwipePlane extends React.Component {
       yratio: 0,
       dxratio: 0,
       dyratio: 0,
-      direction: false
+      direction: false,
+      onTouch: false
     };
 
     this.lastEvent = {
@@ -52,6 +53,7 @@ class SwipePlane extends React.Component {
     this.lastEvent.direction = false;
 
     this.setState({
+      onTouch: true,
       step_x: 0,
       step_y: 0,
       dx: 0,
@@ -84,6 +86,7 @@ class SwipePlane extends React.Component {
     }
 
     let newState = {
+      onTouch: true,
       direction: direction,
       step_x: dx,
       step_y: dy,
@@ -109,6 +112,7 @@ class SwipePlane extends React.Component {
     evt.preventDefault();
 
     this.setState({
+      onTouch: false,
       step_x: 0,
       step_y: 0,
       dx: 0,

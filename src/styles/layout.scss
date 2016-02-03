@@ -49,7 +49,18 @@
 	width: auto;
 	height: auto;
 	overflow: hidden;
-  background-color: white;
+  background-color: #3c55ff;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.view-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
 }
 
 .scroll-y{

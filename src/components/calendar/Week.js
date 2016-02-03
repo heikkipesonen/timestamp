@@ -1,21 +1,25 @@
 import React from 'react';
+import Day from './Day';
 
 class Week extends React.Component {
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.model.join('') !== this.props.model.join('') || nextProps.selectedDate !== this.props.selectedDate;
+  }
+
   render() {
     return (
       <div className="week">
-      {this.props.model.map((day, dayIndex) => {
-        let classNames = 'day';
-
-        if (this.props.selectedDate === day) {
-          classNames += ' selected';
-        }
-        return (
-          <div className={classNames} key={dayIndex} onClick={()=>this.props.onClick(day)}>
-            <span>{day}</span>
-          </div>
-        );
-      })}
+        {this.props.model.map((day, dayIndex) => {
+          return (
+            <Day
+              key={dayIndex}
+              onClick={()=>this.props.onClick(day)}
+              selected={day === this.props.selectedDate}
+              day={day}>
+            </Day>
+          );
+        })}
       </div>
     );
   }

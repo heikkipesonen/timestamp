@@ -24,6 +24,45 @@ export const DAY_NAMES = [
 ];
 
 export class Time {
+
+
+  /**
+   * convert minutes to milliseconds
+   * @param  {[type]} minutes [description]
+   * @return {[type]}         [description]
+   */
+  static minutesToMs(minutes) {
+    return minutes*60*1000;
+  }
+
+  /**
+   * return minutes formatted to hours:minutes
+   * @param  {[type]} model [description]
+   * @return {[type]}       [description]
+   */
+  static formatMinutes(model) {
+    let hours = ('0'+ Math.floor(model / 60)).slice(-2);
+    let minutes = ('0' + (model % 60)).slice(-2);
+    return `${hours}:${minutes}`;
+  }
+
+  /**
+   * format date as dd.mm.yyyy
+   * @param  {[type]} model [description]
+   * @return {[type]}       [description]
+   */
+  static formatDate(model) {
+    let day = ('0' + model.getDate()).slice(-2);
+    let month = ('0' + (model.getMonth() +1)).slice(-2);
+    let year = model.getFullYear();
+    return `${day}.${month}.${year}`;
+  }
+
+  /**
+   * get array of dates in
+   * @param  {[type]} model [description]
+   * @return {[type]}       [description]
+   */
   static getMonthDays(model) {
     let trackModel = new Date(model.getTime());
     trackModel.setDate(1);

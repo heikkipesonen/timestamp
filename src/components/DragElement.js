@@ -44,10 +44,23 @@ class DragElement extends React.Component{
   }
 
   componentDidMount() {
+    this.refs.dragElement.addEventListener('touchstart', this.dragStart);
+    this.refs.dragElement.addEventListener('touchmove', this.dragMove);
+    this.refs.dragElement.addEventListener('touchend', this.dragEnd);
     this.refs.dragElement.addEventListener('transitionend', this.animationEnd);
+
+    if (this.options.start_y || this.options.start_x){
+      this.setPosition({
+        y: this.options.start_y || this.options.min_y,
+        x: this.options.start_x || this.options.min_x
+      });
+    }    
   }
 
   componentWillUnmount(){
+    this.refs.dragElement.removeEventListener('touchstart', this.dragStart);
+    this.refs.dragElement.removeEventListener('touchmove', this.dragMove);
+    this.refs.dragElement.removeEventListener('touchend', this.dragEnd);
     this.refs.dragElement.removeEventListener('transitionend', this.animationEnd);
   }
 
